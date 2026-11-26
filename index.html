@@ -1,344 +1,596 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MIYORA MD — Session Settings Web</title>
-  <style>
-    :root {
-      --bg: #070912;
-      --card: #0e1324;
-      --card-2: #141b33;
-      --border: rgba(120, 145, 255, 0.2);
-      --text: #eef2ff;
-      --muted: #94a3b8;
-      --accent: #a855f7;
-      --accent-2: #ec4899;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: radial-gradient(circle at top, #181336 0%, var(--bg) 60%);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 24px 16px;
-    }
-    .wrap { max-width: 540px; margin: 0 auto; }
-    .header { text-align: center; margin-bottom: 22px; }
-    .header h1 {
-      margin: 0;
-      font-size: 1.6rem;
-      background: linear-gradient(90deg, #e879f9, #818cf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .header p { margin: 6px 0 0; color: var(--muted); font-size: 0.9rem; }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 16px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-    }
-    .hidden { display: none !important; }
-    .row { display: flex; gap: 10px; flex-wrap: wrap; }
-    label {
-      display: block;
-      font-size: 0.84rem;
-      color: var(--muted);
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-    input, select {
-      width: 100%;
-      padding: 11px 13px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--card-2);
-      color: var(--text);
-      font-size: 0.95rem;
-      outline: none;
-    }
-    input:focus, select:focus { border-color: var(--accent); }
-    .pass-input {
-      letter-spacing: 3px;
-      font-family: monospace;
-      font-size: 1.05rem;
-    }
-    .field { flex: 1 1 200px; margin-bottom: 14px; }
-    .toggle-box {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--card-2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 14px;
-      margin-bottom: 12px;
-    }
-    .toggle-title { font-weight: 600; font-size: 0.95rem; }
-    .toggle-sub { font-size: 0.8rem; color: var(--muted); }
-    .switch { position: relative; width: 48px; height: 26px; flex-shrink: 0; }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .slider {
-      position: absolute; inset: 0; background: #334155;
-      border-radius: 999px; cursor: pointer; transition: 0.2s;
-    }
-    .slider::before {
-      content: ""; position: absolute; width: 20px; height: 20px;
-      left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: 0.2s;
-    }
-    .switch input:checked + .slider {
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-    }
-    .switch input:checked + .slider::before { transform: translateX(22px); }
-    .preview-wrap { margin: 8px 0 14px; text-align: center; }
-    .preview-wrap img {
-      max-height: 150px; max-width: 100%; border-radius: 12px;
-      border: 1px solid var(--border); object-fit: cover;
-    }
-    button {
-      padding: 11px 16px; border-radius: 10px; border: none;
-      font-weight: 600; font-size: 0.92rem; cursor: pointer; color: #fff;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-    }
-    button.secondary { background: var(--card-2); border: 1px solid var(--border); }
-    .full-btn { width: 100%; padding: 12px; font-size: 0.98rem; }
-    .status {
-      margin-top: 12px; padding: 10px 12px; border-radius: 10px;
-      font-size: 0.88rem; display: none;
-    }
-    .status.ok {
-      display: block; background: rgba(34, 197, 94, 0.14);
-      border: 1px solid rgba(34, 197, 94, 0.4); color: #86efac;
-    }
-    .status.err {
-      display: block; background: rgba(239, 68, 68, 0.14);
-      border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5;
-    }
-    .topbar {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 14px; gap: 10px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MIYORA MD — Bot Settings</title>
+<meta name="description" content="Edit your Miyora MD bot settings." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Klee+One:wght@600&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #05070f;
+    --ink-2: #0a1226;
+    --ink-3: #111f3d;
+    --sakura: #b06bff;
+    --sakura-deep: #7a2bff;
+    --lantern: #d8a3ff;
+    --lantern-soft: #e9d4ff;
+    --paper: #f3ecff;
+    --muted: #9a8fbd;
+    --line: rgba(176,107,255,0.18);
+    --danger: #ff8a8a;
+    --good: #9be8b0;
+  }
+
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+
+  body{
+    background: radial-gradient(ellipse 120% 80% at 50% -10%, #2a1550 0%, var(--ink) 55%, #05070f 100%);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .stage{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6vh 20px 8vh;
+  }
+
+  .brand{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .kanji-badge{
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(160deg, var(--ink-3), var(--ink-2));
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Klee One', cursive;
+    font-size: 22px;
+    color: var(--sakura);
+    flex-shrink: 0;
+    overflow: hidden;
+    box-shadow: 0 0 16px rgba(176,107,255,0.35) inset;
+  }
+  .kanji-badge img{ width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+  h1.wordmark{
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 800;
+    font-size: clamp(26px, 5vw, 36px);
+    letter-spacing: 0.02em;
+    margin: 0;
+    background: linear-gradient(100deg, var(--paper) 25%, var(--sakura) 70%, var(--lantern) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 30px rgba(176,107,255,0.25);
+  }
+
+  .tagline{
+    color: var(--muted);
+    font-size: 14px;
+    text-align: center;
+    max-width: 390px;
+    margin: 10px 0 32px;
+    line-height: 1.5;
+  }
+
+  .card{
+    width: 100%;
+    max-width: 460px;
+    background: linear-gradient(165deg, var(--ink-2), var(--ink) 130%);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 28px 26px 30px;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.55);
+  }
+
+  .eyebrow{
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--lantern);
+    margin: 0 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  label.field-label{
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .field{ margin-bottom: 16px; }
+
+  input, select, textarea{
+    width: 100%;
+    background: var(--ink-3);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    color: var(--paper);
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    padding: 13px 14px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  select{ font-family: 'Inter', sans-serif; cursor: pointer; }
+  input::placeholder{ color: #6f5f94; }
+  input:focus, select:focus, textarea:focus{
+    border-color: var(--sakura);
+    box-shadow: 0 0 0 3px rgba(122,43,255,0.22);
+  }
+  input[type="text"].pw{ letter-spacing: 0.12em; }
+
+  .hint{
+    font-size: 12px;
+    color: var(--muted);
+    margin: 8px 0 0;
+    line-height: 1.45;
+  }
+
+  .btn{
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 18px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #fff;
+    background: linear-gradient(120deg, var(--sakura) 0%, var(--sakura-deep) 100%);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+    box-shadow: 0 10px 28px -10px rgba(122,43,255,0.75);
+  }
+  .btn:hover{ transform: translateY(-1px); }
+  .btn:active{ transform: translateY(0); }
+  .btn:disabled{ opacity: 0.6; cursor: default; transform: none; }
+  .btn.secondary{
+    background: transparent;
+    border: 1px solid rgba(216,163,255,0.4);
+    color: var(--lantern-soft);
+    box-shadow: none;
+    margin-top: 10px;
+  }
+  .btn.secondary:hover{ background: rgba(216,163,255,0.1); }
+
+  .btn:focus-visible, input:focus-visible, select:focus-visible{
+    outline: 2px solid var(--lantern);
+    outline-offset: 2px;
+  }
+
+  .spinner{
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: -2px;
+    animation: spin-loader 0.7s linear infinite;
+  }
+  @keyframes spin-loader{ to{ transform: rotate(360deg); } }
+
+  .msg{
+    margin-top: 16px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: none;
+  }
+  .msg.show{ display: block; }
+  .msg.error{ background: rgba(255,138,138,0.1); color: var(--danger); border: 1px solid rgba(255,138,138,0.25); }
+  .msg.good{ background: rgba(155,232,176,0.1); color: var(--good); border: 1px solid rgba(155,232,176,0.25); }
+
+  .toggle-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--ink-3);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 13px 14px;
+    margin-bottom: 12px;
+  }
+  .toggle-row .label-group{ display: flex; flex-direction: column; }
+  .toggle-row .t-title{ font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--paper); }
+  .toggle-row .t-sub{ font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+  .switch{
+    position: relative;
+    width: 46px; height: 26px;
+    flex-shrink: 0;
+    margin-left: 14px;
+  }
+  .switch input{ display: none; width: auto; padding: 0; }
+  .switch .track{
+    position: absolute; inset: 0;
+    background: #3d3358;
+    border-radius: 999px;
+    transition: background 0.18s ease;
+    cursor: pointer;
+  }
+  .switch .thumb{
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--paper);
+    transition: transform 0.18s ease;
+  }
+  .switch input:checked + .track{ background: linear-gradient(120deg, var(--sakura), var(--sakura-deep)); }
+  .switch input:checked + .track .thumb{ transform: translateX(20px); }
+
+  .section-title{
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 22px 0 12px;
+  }
+  .section-title:first-of-type{ margin-top: 4px; }
+
+  .top-bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .number-pill{
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--lantern-soft);
+    background: rgba(216,163,255,0.1);
+    border: 1px solid rgba(216,163,255,0.3);
+    padding: 5px 10px;
+    border-radius: 999px;
+  }
+
+  .preview-box{
+    margin: 10px 0 16px;
+    background: var(--ink-3);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+  }
+  .preview-box img{
+    max-height: 140px;
+    max-width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  footer{
+    margin-top: 32px;
+    color: var(--muted);
+    font-size: 12.5px;
+    text-align: center;
+  }
+  footer .mark{ color: var(--sakura); }
+
+  #loginView, #settingsView{ display: none; width: 100%; max-width: 460px; }
+  #loginView.show, #settingsView.show{ display: block; }
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="header">
-      <h1>⚙️ MIYORA MD — Settings Web</h1>
-      <p>Login with your session number & password</p>
+
+<div class="stage">
+
+  <div class="brand">
+    <div class="kanji-badge" aria-hidden="true">
+      <img src="https://files.catbox.moe/u6ek3x.png" alt="Miyora MD logo" onerror="this.style.display='none'; this.parentElement.textContent='桜';" />
+    </div>
+    <h1 class="wordmark">MIYORA MD</h1>
+  </div>
+  <p class="tagline">Manage your own bot's settings — your number, your password, your settings only.</p>
+
+  <!-- ===================== LOGIN ===================== -->
+  <div id="loginView" class="card show">
+    <p class="eyebrow">Sign in</p>
+
+    <div class="field">
+      <label class="field-label" for="loginSessionSelect">Saved sessions</label>
+      <select id="loginSessionSelect">
+        <option value="">Loading sessions…</option>
+      </select>
     </div>
 
-    <div id="loginCard" class="card">
-      <div class="field">
-        <label for="loginSessionSelect">Select Session Number</label>
-        <select id="loginSessionSelect"></select>
-      </div>
-
-      <div class="field">
-        <label for="loginOwner">Session Number</label>
-        <input id="loginOwner" type="text" placeholder="e.g. 94767475809" />
-      </div>
-
-      <div class="field">
-        <label for="loginPassword">Session Password</label>
-        <input id="loginPassword" class="pass-input" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter') loginPanel()" />
-      </div>
-
-      <button type="button" class="full-btn" onclick="loginPanel()">🔓 Login</button>
-      <div id="loginStatus" class="status"></div>
+    <div class="field">
+      <label class="field-label" for="loginNumber">WhatsApp number</label>
+      <input id="loginNumber" type="tel" inputmode="numeric" placeholder="94767475809" autocomplete="off" />
     </div>
 
-    <div id="panelCard" class="card hidden">
-      <div class="topbar">
-        <div>
-          <div style="font-size:0.8rem; color:var(--muted);">Active Session</div>
-          <div id="activeOwnerLabel" style="font-weight:700; color:#f0abfc;"></div>
-        </div>
-        <button type="button" class="secondary" onclick="logoutPanel()">Logout</button>
-      </div>
-
-      <div class="row">
-        <div class="field">
-          <label for="botName">Bot Name</label>
-          <input id="botName" type="text" />
-        </div>
-        <div class="field" style="max-width:130px;">
-          <label for="prefix">Prefix</label>
-          <input id="prefix" type="text" maxlength="4" />
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="mode">Bot Mode</label>
-        <select id="mode">
-          <option value="public">Public</option>
-          <option value="private">Private</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="logo">Menu Logo Image URL</label>
-        <input id="logo" type="url" placeholder="https://files.catbox.moe/u6ek3x.png" oninput="updatePreview()" />
-      </div>
-
-      <div class="preview-wrap">
-        <img id="logoPreview" src="https://files.catbox.moe/u6ek3x.png" alt="Logo Preview" onerror="this.style.display='none'" onload="this.style.display='inline-block'" />
-      </div>
-
-      <div class="toggle-box">
-        <div>
-          <div class="toggle-title">🗑️ Anti-Delete</div>
-          <div class="toggle-sub">Recover deleted messages and media</div>
-        </div>
-        <label class="switch">
-          <input id="antidelete" type="checkbox" />
-          <span class="slider"></span>
-        </label>
-      </div>
-
-      <div class="toggle-box">
-        <div>
-          <div class="toggle-title">✏️ Anti-Edit</div>
-          <div class="toggle-sub">Detect edited messages</div>
-        </div>
-        <label class="switch">
-          <input id="antiedit" type="checkbox" />
-          <span class="slider"></span>
-        </label>
-      </div>
-
-      <button type="button" class="full-btn" onclick="savePanelSettings()">💾 Save Settings</button>
-      <div id="panelStatus" class="status"></div>
+    <div class="field">
+      <label class="field-label" for="loginPassword">Settings password</label>
+      <input id="loginPassword" class="pw" type="password" placeholder="••••••••" autocomplete="off" />
+      <p class="hint">Use the session password shown in your bot's <code>.settings</code> menu.</p>
     </div>
+
+    <button id="loginBtn" class="btn" type="button" style="margin-top: 14px;">Log in</button>
+
+    <div id="loginMsg" class="msg" role="status"></div>
   </div>
 
-  <script>
-    let authOwner = '';
-    let authPassword = '';
+  <!-- ===================== SETTINGS ===================== -->
+  <div id="settingsView" class="card">
+    <div class="top-bar">
+      <p class="eyebrow" style="margin-bottom:0;">Your bot</p>
+      <span id="numberPill" class="number-pill"></span>
+    </div>
 
-    function setBoxStatus(id, msg, isOk) {
-      const el = document.getElementById(id);
-      el.textContent = msg;
-      el.className = 'status ' + (isOk ? 'ok' : 'err');
-    }
+    <p class="section-title">Identity & Mode</p>
 
-    function updatePreview() {
-      const url = document.getElementById('logo').value.trim();
-      document.getElementById('logoPreview').src = url || 'https://files.catbox.moe/u6ek3x.png';
-    }
+    <div class="field">
+      <label class="field-label" for="botName">Bot name</label>
+      <input id="botName" type="text" placeholder="𝐌𝐈𝐘𝐎𝐑𝐀 𝐌𝐃 🌸" style="font-family:'Inter',sans-serif;" />
+    </div>
 
-    async function loadSessionList() {
-      try {
-        const res = await fetch('/api/sessions');
-        const data = await res.json();
-        const sel = document.getElementById('loginSessionSelect');
-        sel.innerHTML = '';
-        if (data.ok && Array.isArray(data.sessions) && data.sessions.length) {
-          data.sessions.forEach((num) => {
-            const opt = document.createElement('option');
-            opt.value = num;
-            opt.textContent = num;
-            sel.appendChild(opt);
-          });
-          document.getElementById('loginOwner').value = sel.value;
-        } else {
+    <div class="field">
+      <label class="field-label" for="prefix">Command prefix</label>
+      <input id="prefix" type="text" maxlength="4" placeholder="." />
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="mode">Reply mode</label>
+      <select id="mode">
+        <option value="public">Public — anyone can use the bot</option>
+        <option value="private">Private — only owner/bot can use the bot</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="logo">Menu logo URL</label>
+      <input id="logo" type="text" placeholder="https://files.catbox.moe/u6ek3x.png" style="font-family:'Inter',sans-serif;" />
+    </div>
+
+    <div class="preview-box">
+      <img id="logoPreview" src="https://files.catbox.moe/u6ek3x.png" alt="Logo preview" onerror="this.style.display='none'" onload="this.style.display='inline-block'" />
+    </div>
+
+    <p class="section-title">Protection & Automation</p>
+
+    <div class="toggle-row">
+      <div class="label-group">
+        <span class="t-title">Anti-delete</span>
+        <span class="t-sub">Recover deleted messages, photos, videos, audio, and stickers</span>
+      </div>
+      <label class="switch">
+        <input id="antidelete" type="checkbox" />
+        <span class="track"><span class="thumb"></span></span>
+      </label>
+    </div>
+
+    <div class="toggle-row">
+      <div class="label-group">
+        <span class="t-title">Anti-edit</span>
+        <span class="t-sub">Detect edited messages and show before & after text</span>
+      </div>
+      <label class="switch">
+        <input id="antiedit" type="checkbox" />
+        <span class="track"><span class="thumb"></span></span>
+      </label>
+    </div>
+
+    <button id="saveBtn" class="btn" type="button" style="margin-top: 18px;">Save settings</button>
+    <button id="logoutBtn" class="btn secondary" type="button">Log out</button>
+
+    <div id="settingsMsg" class="msg" role="status"></div>
+  </div>
+
+  <footer>
+    <span class="mark"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="vertical-align:-2px;"><circle cx="12" cy="7" r="3"/><circle cx="17" cy="10.5" r="3"/><circle cx="15" cy="16" r="3"/><circle cx="9" cy="16" r="3"/><circle cx="7" cy="10.5" r="3"/></svg></span> Miyora MD — settings here only affect this number's bot. Built by Sasinda Denuwan.
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  const API_BASE = ''; // Same origin on Heroku; set full URL if hosted separately
+
+  const loginView = document.getElementById('loginView');
+  const settingsView = document.getElementById('settingsView');
+
+  const loginSessionSelect = document.getElementById('loginSessionSelect');
+  const loginNumber = document.getElementById('loginNumber');
+  const loginPassword = document.getElementById('loginPassword');
+  const loginBtn = document.getElementById('loginBtn');
+  const loginMsg = document.getElementById('loginMsg');
+
+  const numberPill = document.getElementById('numberPill');
+  const botNameInput = document.getElementById('botName');
+  const prefixInput = document.getElementById('prefix');
+  const modeSelect = document.getElementById('mode');
+  const logoInput = document.getElementById('logo');
+  const logoPreview = document.getElementById('logoPreview');
+  const antideleteToggle = document.getElementById('antidelete');
+  const antieditToggle = document.getElementById('antiedit');
+  const saveBtn = document.getElementById('saveBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const settingsMsg = document.getElementById('settingsMsg');
+
+  let session = { ownerNumber: '', password: '' };
+
+  function showMsg(el, text, kind){
+    el.textContent = text;
+    el.className = 'msg show ' + kind;
+  }
+  function hideMsg(el){
+    el.className = 'msg';
+  }
+  function updatePreview(){
+    const url = logoInput.value.trim();
+    logoPreview.src = url || 'https://files.catbox.moe/u6ek3x.png';
+  }
+
+  function fillForm(s){
+    s = s || {};
+    botNameInput.value = s.name || '';
+    prefixInput.value = s.prefix || '.';
+    modeSelect.value = s.mode === 'private' ? 'private' : 'public';
+    logoInput.value = s.logo || '';
+    antideleteToggle.checked = Boolean(s.antidelete);
+    antieditToggle.checked = Boolean(s.antiedit);
+    updatePreview();
+  }
+
+  function showSettings(ownerNumber, s){
+    numberPill.textContent = ownerNumber;
+    fillForm(s);
+    loginView.classList.remove('show');
+    settingsView.classList.add('show');
+  }
+
+  function showLogin(){
+    settingsView.classList.remove('show');
+    loginView.classList.add('show');
+    loginPassword.value = '';
+  }
+
+  async function loadSessions(){
+    try{
+      const res = await fetch(API_BASE + '/api/sessions');
+      const data = await res.json().catch(() => ({}));
+      loginSessionSelect.innerHTML = '';
+      if(data.ok && Array.isArray(data.sessions) && data.sessions.length){
+        data.sessions.forEach((num) => {
           const opt = document.createElement('option');
-          opt.value = '';
-          opt.textContent = 'Enter session number below';
-          sel.appendChild(opt);
-        }
-      } catch (e) {
-        setBoxStatus('loginStatus', 'Failed to load sessions: ' + e.message, false);
-      }
-    }
-
-    document.getElementById('loginSessionSelect').addEventListener('change', (e) => {
-      if (e.target.value) document.getElementById('loginOwner').value = e.target.value;
-    });
-
-    async function loginPanel() {
-      const ownerNumber = document.getElementById('loginOwner').value.trim();
-      const password = document.getElementById('loginPassword').value.trim();
-      if (!ownerNumber || !password) {
-        return setBoxStatus('loginStatus', 'Session number and password are required.', false);
-      }
-
-      try {
-        const res = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ownerNumber, password })
+          opt.value = num;
+          opt.textContent = num;
+          loginSessionSelect.appendChild(opt);
         });
-        const data = await res.json();
-        if (!data.ok) {
-          return setBoxStatus('loginStatus', data.error || 'Login failed', false);
-        }
-
-        authOwner = data.ownerNumber;
-        authPassword = password;
-        const s = data.settings || {};
-
-        document.getElementById('activeOwnerLabel').textContent = authOwner;
-        document.getElementById('botName').value = s.name || '';
-        document.getElementById('prefix').value = s.prefix || '.';
-        document.getElementById('mode').value = s.mode || 'public';
-        document.getElementById('logo').value = s.logo || '';
-        document.getElementById('antidelete').checked = Boolean(s.antidelete);
-        document.getElementById('antiedit').checked = Boolean(s.antiedit);
-        updatePreview();
-
-        document.getElementById('loginCard').classList.add('hidden');
-        document.getElementById('panelCard').classList.remove('hidden');
-        setBoxStatus('panelStatus', 'Logged in!', true);
-      } catch (e) {
-        setBoxStatus('loginStatus', 'Login error: ' + e.message, false);
+        loginNumber.value = loginSessionSelect.value;
+      } else {
+        const opt = document.createElement('option');
+        opt.value = '';
+        opt.textContent = 'Enter number below';
+        loginSessionSelect.appendChild(opt);
       }
+    } catch(_){
+      loginSessionSelect.innerHTML = '<option value="">Enter number below</option>';
+    }
+  }
+
+  async function doLogin(){
+    const ownerNumber = loginNumber.value.replace(/[^0-9]/g, '');
+    const password = loginPassword.value.trim();
+    hideMsg(loginMsg);
+
+    if(!ownerNumber || ownerNumber.length < 7){
+      showMsg(loginMsg, 'Enter a valid WhatsApp number with country code (digits only).', 'error');
+      return;
+    }
+    if(!password){
+      showMsg(loginMsg, 'Enter your session settings password.', 'error');
+      return;
     }
 
-    function logoutPanel() {
-      authOwner = '';
-      authPassword = '';
-      document.getElementById('loginPassword').value = '';
-      document.getElementById('panelCard').classList.add('hidden');
-      document.getElementById('loginCard').classList.remove('hidden');
-    }
+    loginBtn.disabled = true;
+    loginBtn.innerHTML = '<span class="spinner"></span>Signing in…';
 
-    async function savePanelSettings() {
-      if (!authOwner || !authPassword) return logoutPanel();
+    try{
+      const res = await fetch(API_BASE + '/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ownerNumber, password })
+      });
+      const data = await res.json().catch(() => ({}));
 
-      const payload = {
-        name: document.getElementById('botName').value.trim(),
-        prefix: document.getElementById('prefix').value.trim() || '.',
-        mode: document.getElementById('mode').value,
-        logo: document.getElementById('logo').value.trim(),
-        antidelete: document.getElementById('antidelete').checked,
-        antiedit: document.getElementById('antiedit').checked
-      };
-
-      try {
-        const res = await fetch('/api/settings/' + encodeURIComponent(authOwner), {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-panel-password': authPassword
-          },
-          body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        if (!data.ok) {
-          if (res.status === 401) logoutPanel();
-          return setBoxStatus('panelStatus', data.error || 'Failed to save', false);
-        }
-        setBoxStatus('panelStatus', '✅ Saved to MongoDB!', true);
-      } catch (e) {
-        setBoxStatus('panelStatus', 'Save error: ' + e.message, false);
+      if(!data.ok){
+        showMsg(loginMsg, data.error || 'Incorrect number or password.', 'error');
+        return;
       }
-    }
 
-    loadSessionList();
-  </script>
+      session = { ownerNumber: data.ownerNumber || ownerNumber, password };
+      showSettings(session.ownerNumber, data.settings);
+    } catch(err){
+      showMsg(loginMsg, 'Could not reach the settings server. Try again in a moment.', 'error');
+    } finally{
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Log in';
+    }
+  }
+
+  async function doSave(){
+    hideMsg(settingsMsg);
+
+    const payload = {
+      name: botNameInput.value.trim(),
+      prefix: prefixInput.value.trim() || '.',
+      mode: modeSelect.value === 'private' ? 'private' : 'public',
+      logo: logoInput.value.trim(),
+      antidelete: antideleteToggle.checked,
+      antiedit: antieditToggle.checked
+    };
+
+    saveBtn.disabled = true;
+    saveBtn.innerHTML = '<span class="spinner"></span>Saving…';
+
+    try{
+      const res = await fetch(API_BASE + '/api/settings/' + encodeURIComponent(session.ownerNumber), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-panel-password': session.password
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if(!data.ok){
+        if(res.status === 401){
+          showLogin();
+          showMsg(loginMsg, 'Session expired or password changed. Please log in again.', 'error');
+          return;
+        }
+        showMsg(settingsMsg, data.error || 'Could not save settings.', 'error');
+        return;
+      }
+
+      showMsg(settingsMsg, 'Settings saved. Your bot will use these right away.', 'good');
+    } catch(err){
+      showMsg(settingsMsg, 'Could not reach the settings server. Try again in a moment.', 'error');
+    } finally{
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Save settings';
+    }
+  }
+
+  loginSessionSelect.addEventListener('change', (e) => {
+    if(e.target.value) loginNumber.value = e.target.value;
+  });
+  logoInput.addEventListener('input', updatePreview);
+  loginBtn.addEventListener('click', doLogin);
+  loginPassword.addEventListener('keydown', (e) => { if(e.key === 'Enter') doLogin(); });
+  loginNumber.addEventListener('keydown', (e) => { if(e.key === 'Enter') doLogin(); });
+  saveBtn.addEventListener('click', doSave);
+  logoutBtn.addEventListener('click', () => {
+    session = { ownerNumber: '', password: '' };
+    showLogin();
+  });
+
+  loadSessions();
+})();
+</script>
+
 </body>
 </html>
