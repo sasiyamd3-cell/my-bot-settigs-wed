@@ -290,6 +290,201 @@
 
   #loginView, #settingsView{ display: none; width: 100%; max-width: 460px; }
   #loginView.show, #settingsView.show{ display: block; }
+
+/* ===== MIYORA MD · iOS GLASS REDESIGN ===== */
+:root{
+  --ink:#080711;--ink-2:#100d1d;--ink-3:#1a1530;
+  --sakura:#b56cff;--sakura-deep:#7938e8;--lantern:#e1baff;
+  --lantern-soft:#f0ddff;--paper:#fbf7ff;--muted:#a69bb8;
+  --line:rgba(205,160,255,.17);--danger:#ff929d;--good:#8cebb0;
+}
+*{box-sizing:border-box}
+html{min-height:100%;scroll-behavior:smooth}
+body{
+  min-height:100vh;color:var(--paper);font-family:Inter,sans-serif;
+  background:
+    radial-gradient(ellipse 75% 55% at 50% -12%,rgba(133,64,214,.34),transparent 72%),
+    radial-gradient(ellipse 45% 45% at 0% 75%,rgba(104,49,173,.17),transparent 75%),
+    radial-gradient(ellipse 45% 45% at 100% 65%,rgba(191,91,226,.12),transparent 75%),
+    #080711;
+  overflow-x:hidden;
+}
+body:before,body:after{
+  content:"";position:fixed;z-index:-1;pointer-events:none;border-radius:50%;
+  filter:blur(85px);opacity:.28;animation:miyoraFloat 13s ease-in-out infinite alternate;
+}
+body:before{width:280px;height:280px;left:-130px;top:20%;background:#8b43ed}
+body:after{width:300px;height:300px;right:-150px;bottom:5%;background:#bd54d9;animation-delay:-5s}
+@keyframes miyoraFloat{to{transform:translate(35px,-35px) scale(1.12)}}
+.stage{min-height:100vh;padding:42px 18px 38px;display:flex;flex-direction:column;align-items:center}
+.brand{gap:13px;margin-bottom:8px}
+.kanji-badge{
+  width:48px;height:48px;border-radius:17px;
+  background:linear-gradient(145deg,rgba(190,130,255,.24),rgba(104,54,170,.13));
+  border:1px solid rgba(221,185,255,.25);
+  box-shadow:0 8px 30px #8b43ed25,inset 0 1px 0 #ffffff20;
+}
+h1.wordmark{
+  font-family:Inter,sans-serif;font-size:clamp(25px,5vw,34px);
+  font-weight:800;letter-spacing:-1.4px;
+  background:linear-gradient(100deg,#fff 18%,#d8b3ff 62%,#f0c8ff);
+  -webkit-background-clip:text;background-clip:text;
+  text-shadow:none;
+}
+.tagline{max-width:410px;margin:12px 0 30px;color:#aaa0ba;font-size:13px;line-height:1.75}
+.card{
+  width:100%;max-width:490px;padding:26px;
+  background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.025));
+  border:1px solid rgba(221,185,255,.17);border-radius:28px;
+  box-shadow:0 30px 90px #0008,inset 0 1px 0 #ffffff12;
+  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+  animation:miyoraEnter .55s ease both;
+}
+@keyframes miyoraEnter{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+.eyebrow{
+  color:#d7b3ff;font-family:Inter,sans-serif;font-size:11px;
+  font-weight:800;letter-spacing:1.8px;margin-bottom:22px;
+}
+.field{margin-bottom:17px}
+label.field-label{font-size:12px;color:#ded4eb;font-weight:600;margin-bottom:9px}
+input,select,textarea{
+  width:100%;min-height:51px;padding:14px 15px;
+  border-radius:15px;border:1px solid rgba(255,255,255,.11);
+  background:rgba(255,255,255,.045);color:#fff;
+  font-family:Inter,sans-serif;font-size:14px;outline:none;
+  transition:border-color .2s,background .2s,box-shadow .2s;
+}
+input::placeholder{color:#777087}
+select{cursor:pointer}
+select option{background:#171126;color:#fff}
+input:focus,select:focus,textarea:focus{
+  border-color:#b879ff;background:rgba(168,85,247,.08);
+  box-shadow:0 0 0 4px rgba(168,85,247,.13)
+}
+input[type="text"].pw{letter-spacing:.12em}
+.hint{font-size:11px;color:#9990a9;line-height:1.65;margin-top:8px}
+.btn{
+  min-height:51px;width:100%;border:0;border-radius:15px;padding:14px 18px;
+  background:linear-gradient(110deg,#b56cff,#7938e8);color:#fff;
+  font-family:Inter,sans-serif;font-size:14px;font-weight:750;
+  box-shadow:0 10px 28px rgba(121,56,232,.28);
+  transition:transform .2s,box-shadow .2s,filter .2s;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(121,56,232,.38);filter:brightness(1.07)}
+.btn:active{transform:scale(.985)}
+.btn:disabled{opacity:.58;transform:none;cursor:wait}
+.btn.secondary{
+  margin-top:11px;background:rgba(255,255,255,.045);
+  border:1px solid rgba(221,185,255,.2);color:#e9d8ff;box-shadow:none
+}
+.btn.secondary:hover{background:rgba(168,85,247,.1);border-color:#bd8aff66}
+.btn:focus-visible,input:focus-visible,select:focus-visible{
+  outline:2px solid #d7b3ff;outline-offset:3px
+}
+.spinner{width:15px;height:15px;border:2px solid #ffffff55;border-top-color:#fff;border-radius:50%;animation:spin-loader .7s linear infinite}
+@keyframes spin-loader{to{transform:rotate(360deg)}}
+.msg{margin-top:15px;padding:13px 15px;border-radius:14px;font-size:12px;line-height:1.7}
+.msg.error{background:#ff737310;color:#ffabb2;border:1px solid #ff85852b}
+.msg.good{background:#67e89a10;color:#9aefb7;border:1px solid #67e89a2b}
+.toggle-row{
+  padding:15px 14px;margin-bottom:11px;border-radius:16px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.085);
+  transition:background .2s,border-color .2s
+}
+.toggle-row:hover{background:rgba(168,85,247,.07);border-color:#b879ff40}
+.toggle-row .t-title{font-size:13px;font-weight:700;color:#f5edff}
+.toggle-row .t-sub{font-size:11px;color:#a49ab4;line-height:1.5;margin-top:4px}
+.switch{width:48px;height:28px}
+.switch .track{background:#484052;border:1px solid #ffffff12}
+.switch .thumb{width:22px;height:22px;top:2px;left:2px;box-shadow:0 2px 7px #0005}
+.switch input:checked + .track{background:linear-gradient(120deg,#b56cff,#7938e8)}
+.switch input:checked + .track .thumb{transform:translateX(20px)}
+.section-title{font-size:10px;font-weight:800;letter-spacing:1.8px;color:#c6a4eb;margin:25px 0 13px}
+.top-bar{margin-bottom:18px}
+.number-pill{
+  color:#e5ccff;background:rgba(168,85,247,.12);
+  border:1px solid rgba(192,132,252,.25);padding:7px 12px;font-size:11px
+}
+.preview-box{
+  margin:12px 0 18px;padding:13px;border-radius:16px;
+  background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)
+}
+.preview-box img{max-height:135px;border-radius:12px}
+footer{margin-top:28px;color:#8d849c;font-size:11px;line-height:1.8}
+footer .mark{color:#c084fc}
+#loginView,#settingsView{width:100%;max-width:490px}
+@media(max-width:520px){
+  .stage{padding:34px 15px 28px}
+  .card{padding:21px 17px;border-radius:24px}
+  .brand{gap:11px}
+  .kanji-badge{width:43px;height:43px;border-radius:15px}
+  .tagline{font-size:12px;margin-bottom:25px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+
+/* ===== API DASHBOARD MATCH · MIYORA GLASS ===== */
+:root{
+  --ink:#08090d;
+  --ink-2:#101019;
+  --ink-3:#191827;
+  --sakura:#a970ff;
+  --sakura-deep:#7138e8;
+  --lantern:#d9b8ff;
+  --paper:#f8f6ff;
+  --muted:#9994aa;
+  --line:rgba(177,132,255,.19);
+}
+body{
+  background:
+    radial-gradient(ellipse 72% 52% at 50% -12%,rgba(125,73,222,.32),transparent 72%),
+    radial-gradient(ellipse 42% 42% at 0% 80%,rgba(94,52,180,.16),transparent 72%),
+    radial-gradient(ellipse 42% 42% at 100% 65%,rgba(156,83,220,.12),transparent 72%),
+    #08090d;
+}
+.stage{padding-top:38px}
+.brand{position:relative;justify-content:center;flex-wrap:wrap}
+.panel-live{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:7px 11px;border-radius:999px;
+  color:#d9c3ff;background:rgba(158,105,255,.10);
+  border:1px solid rgba(187,147,255,.22);
+  font-size:9px;font-weight:800;letter-spacing:1.25px;
+}
+.panel-live i{
+  width:6px;height:6px;border-radius:50%;background:#65e6a2;
+  box-shadow:0 0 10px #65e6a2;display:inline-block
+}
+.tagline{margin-top:12px}
+.card{
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.022));
+  border:1px solid rgba(190,155,255,.18);
+  border-radius:26px;
+  box-shadow:0 28px 85px rgba(0,0,0,.52),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.eyebrow{color:#c9a7ff}
+input,select,textarea{
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.105);
+  border-radius:14px;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:#a970ff;background:rgba(169,112,255,.075);
+  box-shadow:0 0 0 4px rgba(169,112,255,.13)
+}
+.btn{
+  background:linear-gradient(110deg,#a970ff,#7138e8);
+  box-shadow:0 10px 28px rgba(113,56,232,.30);
+}
+.btn:hover{box-shadow:0 14px 34px rgba(113,56,232,.40)}
+.number-pill{background:rgba(169,112,255,.12);border-color:rgba(187,147,255,.25)}
+@media(max-width:520px){
+  .stage{padding-top:30px}
+  .panel-live{margin-top:4px}
+}
+
 </style>
 </head>
 <body>
@@ -301,29 +496,22 @@
       <img src="https://files.catbox.moe/u6ek3x.png" alt="Miyora MD logo" onerror="this.style.display='none'; this.parentElement.textContent='桜';" />
     </div>
     <h1 class="wordmark">MIYORA MD</h1>
+    <span class="panel-live"><i></i> API PANEL</span>
   </div>
-  <p class="tagline">Manage your own bot's settings — your number, your password, your settings only.</p>
+  <p class="tagline">Your bot. Your identity. Your control.<br>Securely manage your Miyora MD settings in one place.</p>
 
   <!-- ===================== LOGIN ===================== -->
   <div id="loginView" class="card show">
     <p class="eyebrow">Sign in</p>
-
-    <div class="field">
-      <label class="field-label" for="loginSessionSelect">Saved sessions</label>
-      <select id="loginSessionSelect">
-        <option value="">Loading sessions…</option>
-      </select>
-    </div>
-
-    <div class="field">
+<div class="field">
       <label class="field-label" for="loginNumber">WhatsApp number</label>
-      <input id="loginNumber" type="tel" inputmode="numeric" placeholder="94767475809" autocomplete="off" />
+      <input id="loginNumber" type="tel" inputmode="numeric" placeholder="94771234567" autocomplete="tel" />
     </div>
 
     <div class="field">
       <label class="field-label" for="loginPassword">Settings password</label>
       <input id="loginPassword" class="pw" type="password" placeholder="••••••••" autocomplete="off" />
-      <p class="hint">Use the session password shown in your bot's <code>.settings</code> menu.</p>
+      <p class="hint">Enter the WhatsApp number connected to your bot and the password shown in its <code>.settings</code> menu.</p>
     </div>
 
     <button id="loginBtn" class="btn" type="button" style="margin-top: 14px;">Log in</button>
@@ -410,7 +598,6 @@
   const loginView = document.getElementById('loginView');
   const settingsView = document.getElementById('settingsView');
 
-  const loginSessionSelect = document.getElementById('loginSessionSelect');
   const loginNumber = document.getElementById('loginNumber');
   const loginPassword = document.getElementById('loginPassword');
   const loginBtn = document.getElementById('loginBtn');
@@ -464,30 +651,6 @@
     settingsView.classList.remove('show');
     loginView.classList.add('show');
     loginPassword.value = '';
-  }
-
-  async function loadSessions(){
-    try{
-      const res = await fetch(API_BASE + '/api/sessions');
-      const data = await res.json().catch(() => ({}));
-      loginSessionSelect.innerHTML = '';
-      if(data.ok && Array.isArray(data.sessions) && data.sessions.length){
-        data.sessions.forEach((num) => {
-          const opt = document.createElement('option');
-          opt.value = num;
-          opt.textContent = num;
-          loginSessionSelect.appendChild(opt);
-        });
-        loginNumber.value = loginSessionSelect.value;
-      } else {
-        const opt = document.createElement('option');
-        opt.value = '';
-        opt.textContent = 'Enter number below';
-        loginSessionSelect.appendChild(opt);
-      }
-    } catch(_){
-      loginSessionSelect.innerHTML = '<option value="">Enter number below</option>';
-    }
   }
 
   async function doLogin(){
@@ -575,9 +738,6 @@
     }
   }
 
-  loginSessionSelect.addEventListener('change', (e) => {
-    if(e.target.value) loginNumber.value = e.target.value;
-  });
   logoInput.addEventListener('input', updatePreview);
   loginBtn.addEventListener('click', doLogin);
   loginPassword.addEventListener('keydown', (e) => { if(e.key === 'Enter') doLogin(); });
@@ -588,7 +748,6 @@
     showLogin();
   });
 
-  loadSessions();
 })();
 </script>
 
